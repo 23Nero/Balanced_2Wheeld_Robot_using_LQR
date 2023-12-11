@@ -1,16 +1,16 @@
 /*
- * Made by Le Nguyen Khanh Lam \
+ * Made by Le Nguyen Khanh Lam 
  */
 
 #include <Wire.h>
-#include "Kalman.h" //https://github.com/TKJElectronics/KalmanFilter
+#include "Kalman.h"
 #include <SPI.h>
 #include <nRF24L01.h>
 #include <RF24.h>
 
-RF24 radio(26, 28); // Khai báo đối tượng radio với các chân CE và CSN
+RF24 radio(26, 28);
 
-const uint64_t pipe = 0xE8E8F0F0E1LL; // Địa chỉ ống dẫn để gửi dữ liệu
+const uint64_t pipe = 0xE8E8F0F0E1LL; 
 
 #define ToRad PI / 180
 #define ToDeg 180 / PI
@@ -104,7 +104,7 @@ void setup()
   addtheta = 0;
 
   // SET PWM FREQUENCY 31 kHz
-  TCCR2B = TCCR2B & B11111000 | B00000001; // Pin 9 & Pin 10 (https://arduino-info.wikispaces.com/Arduino-PWM-Frequency)
+  TCCR2B = TCCR2B & B11111000 | B00000001;
 
   // Output pin control motor left and right//
   pinMode(pin, OUTPUT);
@@ -363,47 +363,4 @@ void righmotor(uint8_t rpwm, int direct)
     analogWrite(righpwm, rpwm);
   }
 }
-// Serial interrupt receive data control
-void serialEvent1()
-{
-  while (Serial1.available() > 0)
-  {
-    inChar = Serial1.read();
-  }
-  // Control motor forward
-  if (inChar == 70) // F -->run
-  {
-    ForwardBack = 1;
-  }
-  if (inChar == 83) // T -->stop
-  {
-    ForwardBack = 0;
-  }
-  // Control motor Back
-  if (inChar == 66) // B
-  {
-    ForwardBack = -1;
-  }
-  if (inChar == 86) // V
-  {
-    ForwardBack = 0;
-  }
-  // Control motor Left
-  if (inChar == 76) // L
-  {
-    LeftRight = 1;
-  }
-  if (inChar == 85) // U
-  {
-    LeftRight = 0;
-  }
-  // Control motor right
-  if (inChar == 82) // R
-  {
-    LeftRight = -1;
-  }
-  if (inChar == 79) // O
-  {
-    LeftRight = 0;
-  }
-}
+
